@@ -1,7 +1,7 @@
-#define NGX_CONFIGURE " --prefix=/usr/local/nginx --sbin-path=/usr/local/nginx/sbin/nginx --conf-path=/usr/local/nginx/conf/nginx.conf --error-log-path=/home/zzxy1999/nginx/logs/error.log --http-log-path=/home/zzxy1999/nginx/logs/access.log --pid-path=/home/zzxy1999/nginx/nginx.pid --lock-path=/home/zzxy1999/nginx/nginx.lock --http-client-body-temp-path=/home/zzxy1999/nginx/cache/client_temp --http-proxy-temp-path=/home/zzxy1999/nginx/cache/proxy_temp --http-fastcgi-temp-path=/home/zzxy1999/nginx/cache/fastcgi_temp --http-uwsgi-temp-path=/home/zzxy1999/nginx/cache/uwsgi_temp --http-scgi-temp-path=/home/zzxy1999/nginx/cache/scgi_temp --with-openssl=../openssl-1.1.1h --user=www-data --group=www-data --with-file-aio --with-threads --with-http_addition_module --with-http_auth_request_module --with-http_dav_module --with-http_flv_module --with-http_gunzip_module --with-http_gzip_static_module --with-http_mp4_module --with-http_realip_module --with-http_secure_link_module --with-http_ssl_module --with-http_stub_status_module --with-http_sub_module --with-http_v2_module --with-mail --with-mail_ssl_module --with-stream --with-stream_ssl_module --add-module=../third-modules/nginx-ssl-fingerprint"
+#define NGX_CONFIGURE " --prefix=/usr/local/nginx --sbin-path=/usr/local/nginx/sbin/nginx --conf-path=/usr/local/nginx/conf/nginx.conf --error-log-path=/data/home/jessexyzhu/nginx/logs/error.log --http-log-path=/data/home/jessexyzhu/nginx/logs/access.log --pid-path=/data/home/jessexyzhu/nginx/nginx.pid --lock-path=/data/home/jessexyzhu/nginx/nginx.lock --http-client-body-temp-path=/data/home/jessexyzhu/nginx/cache/client_temp --http-proxy-temp-path=/data/home/jessexyzhu/nginx/cache/proxy_temp --http-fastcgi-temp-path=/data/home/jessexyzhu/nginx/cache/fastcgi_temp --http-uwsgi-temp-path=/data/home/jessexyzhu/nginx/cache/uwsgi_temp --http-scgi-temp-path=/data/home/jessexyzhu/nginx/cache/scgi_temp --with-openssl=../openssl-1.1.1h --user=www-data --group=www-data --with-file-aio --with-threads --with-http_addition_module --with-http_auth_request_module --with-http_dav_module --with-http_flv_module --with-http_gunzip_module --with-http_gzip_static_module --with-http_mp4_module --with-http_realip_module --with-http_secure_link_module --with-http_ssl_module --with-http_stub_status_module --with-http_sub_module --with-http_v2_module --with-mail --with-mail_ssl_module --with-stream --with-stream_ssl_module --add-module=../third-modules/nginx-ssl-fingerprint"
 
 #ifndef NGX_COMPILER
-#define NGX_COMPILER  "gcc 9.4.0 (Ubuntu 9.4.0-1ubuntu1~20.04.2) "
+#define NGX_COMPILER  "gcc 12.3.1 20230912 (TencentOS 12.3.1.3-3) (Tencent Compiler 12.3.1.3) "
 #endif
 
 
@@ -283,8 +283,8 @@
 #endif
 
 
-#ifndef NGX_SYS_NERR
-#define NGX_SYS_NERR  135
+#ifndef NGX_HAVE_STRERRORDESC_NP
+#define NGX_HAVE_STRERRORDESC_NP  1
 #endif
 
 
@@ -524,47 +524,47 @@
 
 
 #ifndef NGX_PID_PATH
-#define NGX_PID_PATH  "/home/zzxy1999/nginx/nginx.pid"
+#define NGX_PID_PATH  "/data/home/jessexyzhu/nginx/nginx.pid"
 #endif
 
 
 #ifndef NGX_LOCK_PATH
-#define NGX_LOCK_PATH  "/home/zzxy1999/nginx/nginx.lock"
+#define NGX_LOCK_PATH  "/data/home/jessexyzhu/nginx/nginx.lock"
 #endif
 
 
 #ifndef NGX_ERROR_LOG_PATH
-#define NGX_ERROR_LOG_PATH  "/home/zzxy1999/nginx/logs/error.log"
+#define NGX_ERROR_LOG_PATH  "/data/home/jessexyzhu/nginx/logs/error.log"
 #endif
 
 
 #ifndef NGX_HTTP_LOG_PATH
-#define NGX_HTTP_LOG_PATH  "/home/zzxy1999/nginx/logs/access.log"
+#define NGX_HTTP_LOG_PATH  "/data/home/jessexyzhu/nginx/logs/access.log"
 #endif
 
 
 #ifndef NGX_HTTP_CLIENT_TEMP_PATH
-#define NGX_HTTP_CLIENT_TEMP_PATH  "/home/zzxy1999/nginx/cache/client_temp"
+#define NGX_HTTP_CLIENT_TEMP_PATH  "/data/home/jessexyzhu/nginx/cache/client_temp"
 #endif
 
 
 #ifndef NGX_HTTP_PROXY_TEMP_PATH
-#define NGX_HTTP_PROXY_TEMP_PATH  "/home/zzxy1999/nginx/cache/proxy_temp"
+#define NGX_HTTP_PROXY_TEMP_PATH  "/data/home/jessexyzhu/nginx/cache/proxy_temp"
 #endif
 
 
 #ifndef NGX_HTTP_FASTCGI_TEMP_PATH
-#define NGX_HTTP_FASTCGI_TEMP_PATH  "/home/zzxy1999/nginx/cache/fastcgi_temp"
+#define NGX_HTTP_FASTCGI_TEMP_PATH  "/data/home/jessexyzhu/nginx/cache/fastcgi_temp"
 #endif
 
 
 #ifndef NGX_HTTP_UWSGI_TEMP_PATH
-#define NGX_HTTP_UWSGI_TEMP_PATH  "/home/zzxy1999/nginx/cache/uwsgi_temp"
+#define NGX_HTTP_UWSGI_TEMP_PATH  "/data/home/jessexyzhu/nginx/cache/uwsgi_temp"
 #endif
 
 
 #ifndef NGX_HTTP_SCGI_TEMP_PATH
-#define NGX_HTTP_SCGI_TEMP_PATH  "/home/zzxy1999/nginx/cache/scgi_temp"
+#define NGX_HTTP_SCGI_TEMP_PATH  "/data/home/jessexyzhu/nginx/cache/scgi_temp"
 #endif
 
 

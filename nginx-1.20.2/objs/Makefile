@@ -516,7 +516,7 @@ objs/nginx:	objs/src/core/nginx.o \
 	objs/addon/src/ngx_http_ssl_fingerprint_module.o \
 	objs/addon/src/ngx_stream_ssl_fingerprint_preread_module.o \
 	objs/ngx_modules.o \
-	-ldl -lpthread -lpthread -lcrypt -lpcre ../openssl-1.1.1h/.openssl/lib/libssl.a ../openssl-1.1.1h/.openssl/lib/libcrypto.a -ldl -lpthread -lz \
+	-lpthread -lcrypt -lpcre ../openssl-1.1.1h/.openssl/lib/libssl.a ../openssl-1.1.1h/.openssl/lib/libcrypto.a -lpthread -lz \
 	-Wl,-E
 	
 
@@ -1828,7 +1828,7 @@ objs/addon/src/ngx_stream_ssl_fingerprint_preread_module.o:	$(ADDON_DEPS) \
 ../openssl-1.1.1h/.openssl/include/openssl/ssl.h:	objs/Makefile
 	cd ../openssl-1.1.1h \
 	&& if [ -f Makefile ]; then $(MAKE) clean; fi \
-	&& ./config --prefix=/home/zzxy1999/Documents/nginx/nginx-1.20.2/../openssl-1.1.1h/.openssl no-shared no-threads  \
+	&& ./config --prefix=/data/home/jessexyzhu/nginx/nginx-1.20.2/../openssl-1.1.1h/.openssl no-shared no-threads  \
 	&& $(MAKE) \
 	&& $(MAKE) install_sw LIBDIR=lib
 
@@ -1837,9 +1837,9 @@ manpage:	objs/nginx.8
 
 objs/nginx.8:	man/nginx.8 objs/ngx_auto_config.h
 	sed -e "s|%%PREFIX%%|/usr/local/nginx|" \
-		-e "s|%%PID_PATH%%|/home/zzxy1999/nginx/nginx.pid|" \
+		-e "s|%%PID_PATH%%|/data/home/jessexyzhu/nginx/nginx.pid|" \
 		-e "s|%%CONF_PATH%%|/usr/local/nginx/conf/nginx.conf|" \
-		-e "s|%%ERROR_LOG_PATH%%|/home/zzxy1999/nginx/logs/error.log|" \
+		-e "s|%%ERROR_LOG_PATH%%|/data/home/jessexyzhu/nginx/logs/error.log|" \
 		< man/nginx.8 > $@
 
 install:	build 
@@ -1886,14 +1886,14 @@ install:	build
 		|| cp conf/nginx.conf '$(DESTDIR)/usr/local/nginx/conf/nginx.conf'
 	cp conf/nginx.conf '$(DESTDIR)/usr/local/nginx/conf/nginx.conf.default'
 
-	test -d '$(DESTDIR)/home/zzxy1999/nginx' \
-		|| mkdir -p '$(DESTDIR)/home/zzxy1999/nginx'
+	test -d '$(DESTDIR)/data/home/jessexyzhu/nginx' \
+		|| mkdir -p '$(DESTDIR)/data/home/jessexyzhu/nginx'
 
-	test -d '$(DESTDIR)/home/zzxy1999/nginx/logs' \
-		|| mkdir -p '$(DESTDIR)/home/zzxy1999/nginx/logs'
+	test -d '$(DESTDIR)/data/home/jessexyzhu/nginx/logs' \
+		|| mkdir -p '$(DESTDIR)/data/home/jessexyzhu/nginx/logs'
 
 	test -d '$(DESTDIR)/usr/local/nginx/html' \
 		|| cp -R html '$(DESTDIR)/usr/local/nginx'
 
-	test -d '$(DESTDIR)/home/zzxy1999/nginx/logs' \
-		|| mkdir -p '$(DESTDIR)/home/zzxy1999/nginx/logs'
+	test -d '$(DESTDIR)/data/home/jessexyzhu/nginx/logs' \
+		|| mkdir -p '$(DESTDIR)/data/home/jessexyzhu/nginx/logs'
