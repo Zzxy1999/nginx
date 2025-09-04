@@ -119,6 +119,17 @@ struct ngx_ssl_connection_s {
     unsigned                    in_ocsp:1;
     unsigned                    early_preread:1;
     unsigned                    write_blocked:1;
+
+    // 计算ja3、ja4所需要的数据，在ssl握手的时候设置
+    ngx_str_t                   fp_ja_data;
+    // ja3的计算方法 md5(fp_ja3_str)
+    ngx_str_t                   fp_ja3_str;
+    ngx_str_t                   fp_ja3_hash;
+    // ja4的计算方法 header_sha256(cipher)_sha256(ext)
+    ngx_str_t                   fp_ja4_header;
+    ngx_str_t                   fp_ja4_cipher;
+    ngx_str_t                   fp_ja4_ext;
+    ngx_str_t                   fp_ja4_hash;
 };
 
 

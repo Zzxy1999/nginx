@@ -374,6 +374,38 @@ static const EXTENSION_DEFINITION ext_defs[] = {
         tls_construct_certificate_authorities, NULL,
     },
     {
+        TLSEXT_TYPE_status_request_v2,
+        SSL_EXT_CLIENT_HELLO,
+        NULL,
+        NULL, NULL,
+        NULL,
+        NULL, NULL,
+    },
+    {
+        TLSEXT_TYPE_compress_certificate,
+        SSL_EXT_CLIENT_HELLO,
+        NULL,
+        NULL, NULL,
+        NULL,
+        NULL, NULL,
+    },
+    {
+        TLSEXT_TYPE_record_size_limit,
+        SSL_EXT_CLIENT_HELLO,
+        NULL,
+        NULL, NULL,
+        NULL,
+        NULL, NULL,
+    },
+    {
+        TLSEXT_TYPE_application_settings,
+        SSL_EXT_CLIENT_HELLO,
+        NULL,
+        NULL, NULL,
+        NULL,
+        NULL, NULL,
+    },
+    {
         /* Must be immediately before pre_shared_key */
         TLSEXT_TYPE_padding,
         SSL_EXT_CLIENT_HELLO,

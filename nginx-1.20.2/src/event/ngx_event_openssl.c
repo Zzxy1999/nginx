@@ -1741,6 +1741,29 @@ ngx_ssl_set_session(ngx_connection_t *c, ngx_ssl_session_t *session)
     return NGX_OK;
 }
 
+int
+ngx_ssl_client_hello_ja3_cb(SSL *s, int *al, void *arg) {
+    ngx_connection_t  *c = arg;
+
+    if (c == NULL) {
+        return 1;
+    }
+
+    if (c->ssl == NULL) {
+        return 1;
+    }
+
+    c->ssl->fp_ja_data.len = SSL_client_hello_get_ja_data(c->ssl->connection, NULL);
+
+    ngx_log_debug1(NGX_LOG_DEBUG_EVENT, c->log, 0, "ngx_ssl_client_hello_ja3_cb: alloc %d bytes", c->ssl->fp_ja_data.len);
+
+    c->ssl->fp_ja_data.data = ngx_pnalloc(c->pool, c->ssl->fp_ja_data.len);
+    c->ssl->fp_ja_data.len = SSL_client_hello_get_ja_data(c->ssl->connection, c->ssl->fp_ja_data.data);
+
+    ngx_log_debug1(NGX_LOG_DEBUG_EVENT, c->log, 0, "ngx_ssl_client_hello_ja3_cb: used %d bytes", c->ssl->fp_ja_data.len);
+
+    return 1;
+}
 
 ngx_int_t
 ngx_ssl_handshake(ngx_connection_t *c)
@@ -1760,6 +1783,8 @@ ngx_ssl_handshake(ngx_connection_t *c)
     }
 
     ngx_ssl_clear_error(c->log);
+
+    SSL_CTX_set_client_hello_cb(c->ssl->session_ctx, ngx_ssl_client_hello_ja3_cb, c);
 
     n = SSL_do_handshake(c->ssl->connection);
 

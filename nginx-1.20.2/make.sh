@@ -15,6 +15,9 @@ mkdir -p ~/nginx/{logs,cache/{client,proxy,fastcgi,uwsgi,scgi}_temp}
   --conf-path=/usr/local/nginx/conf/nginx.conf \
   --error-log-path=$HOME/nginx/logs/error.log \
   --http-log-path=$HOME/nginx/logs/access.log \
+  --with-debug \
+  --with-cc-opt='-g -O0 -DNGX_DEBUG' \
+  --with-openssl-opt='-g -O0' \
   --pid-path=$HOME/nginx/nginx.pid \
   --lock-path=$HOME/nginx/nginx.lock \
   --http-client-body-temp-path=$HOME/nginx/cache/client_temp \

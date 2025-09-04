@@ -5148,6 +5148,138 @@ int SSL_client_hello_get1_extensions_present(SSL *s, int **out, size_t *outlen)
     return 0;
 }
 
+size_t SSL_client_hello_get_ja_data(SSL *s, unsigned char *data)
+{
+    RAW_EXTENSION *ext;
+    PACKET *groups = NULL, *formats = NULL, *algorithms = NULL, *alpn = NULL;
+    size_t num = 0, i;
+    unsigned char *ptr = data, *sni_ptr = NULL;
+
+    if (s->clienthello == NULL)
+        return 0;
+
+    if (data == NULL) {
+        num = 8 + PACKET_remaining(&s->clienthello->ciphersuites);
+        for (i = 0; i < s->clienthello->pre_proc_exts_len; i++) {
+            ext = s->clienthello->pre_proc_exts + i;
+            if (ext->present) {
+                if (ext->type== TLSEXT_TYPE_supported_groups)
+                    groups = &ext->data;
+                if (ext->type== TLSEXT_TYPE_ec_point_formats)
+                    formats = &ext->data;
+                if (ext->type == TLSEXT_TYPE_signature_algorithms)
+                    algorithms = &ext->data;
+                if (ext->type == TLSEXT_TYPE_application_layer_protocol_negotiation)
+                    alpn = &ext->data;
+                num += 2;
+            }
+        }
+        if (groups) {
+            num += PACKET_remaining(groups);
+        }
+        if (formats) {
+            num += PACKET_remaining(formats);
+        }
+        /* ja4所需数据的长度计算 */
+        num += 1; // sni
+        if (alpn) {
+            num += PACKET_remaining(alpn);
+        }
+        if (algorithms) {
+            num += PACKET_remaining(algorithms);
+        }
+        return num;
+    }
+
+    /* version */
+    *(uint16_t*)ptr = (uint16_t)s->clienthello->legacy_version;
+    ptr += 2;
+
+    /* sni */
+    // 这里要从ext获得，不能从SSL_get_servername获得
+    sni_ptr = ptr;
+    *ptr++ = 'i';
+
+    /* ciphers */
+    if (num = PACKET_remaining(&s->clienthello->ciphersuites)) {
+        *(uint16_t*)ptr = (uint16_t)num;
+        ptr += 2;
+        memcpy(ptr, PACKET_data(&s->clienthello->ciphersuites), num);
+        ptr += num;
+    }
+
+    /* extensions */
+    num = 0;
+    for (i = 0; i < s->clienthello->pre_proc_exts_len; i++) {
+        ext = s->clienthello->pre_proc_exts + i;
+        if (ext->present)
+            num++;
+    }
+    *(uint16_t*)ptr = (uint16_t)num*2; // 个数转字节数...
+    ptr += 2;
+    for (i = 0; i < s->clienthello->pre_proc_exts_len; i++) {
+        ext = s->clienthello->pre_proc_exts + i;
+        if (ext->present) {
+            if (ext->received_order >= num)
+                break;
+            if (ext->type== TLSEXT_TYPE_supported_groups)
+                groups = &ext->data;
+            if (ext->type== TLSEXT_TYPE_ec_point_formats)
+                formats = &ext->data;
+            if (ext->type == TLSEXT_TYPE_signature_algorithms)
+                algorithms = &ext->data;
+            if (ext->type == TLSEXT_TYPE_application_layer_protocol_negotiation)
+                alpn = &ext->data;
+            if (ext->type == TLSEXT_TYPE_server_name)
+                if (sni_ptr)
+                    *sni_ptr = 'd';
+            ((uint16_t*)(ptr))[ext->received_order] = (uint16_t)ext->type;
+        }
+    }
+    ptr += num*2;
+
+    /* groups */
+    if (groups && (num = PACKET_remaining(groups))) {
+        memcpy(ptr, PACKET_data(groups), num);
+        *(uint16_t*)ptr = (uint16_t)num;
+        ptr += num;
+    } else {
+        *(uint16_t*)ptr = 0;
+        ptr += 2;
+    }
+
+    /* formats */
+    if (formats && (num = PACKET_remaining(formats))) {
+        memcpy(ptr, PACKET_data(formats), num);
+        *ptr = (uint8_t)num;
+        ptr += num;
+    } else {
+        *ptr++ = 0;
+    }
+
+    /* alpn */
+    if (alpn && (num = PACKET_remaining(alpn))) {
+        memcpy(ptr, PACKET_data(alpn), num);
+        *(uint16_t*)ptr = (uint16_t)num;
+        ptr += num;
+    } else {
+        *(uint16_t*)ptr = 0;
+        ptr += 2;
+    }
+
+    /* algorithm */
+    if (algorithms && (num = PACKET_remaining(algorithms))) {
+        memcpy(ptr, PACKET_data(algorithms), num);
+        *(uint16_t*)ptr = (uint16_t)num;
+        ptr += num;
+    } else {
+        *(uint16_t*)ptr = 0;
+        ptr += 2;
+    }
+
+    return ptr - data;
+}
+
 int SSL_client_hello_get0_ext(SSL *s, unsigned int type, const unsigned char **out,
                        size_t *outlen)
 {

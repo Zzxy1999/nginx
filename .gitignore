@@ -21,30 +21,36 @@ logs/
 cache/
 temp/
 
-# OpenSSL build files
+# OpenSSL generated files (only build artifacts, not source)
 openssl-*/Makefile
 openssl-*/configdata.pm
-openssl-*/crypto/
-openssl-*/ssl/
-openssl-*/apps/
-openssl-*/test/
-openssl-*/tools/
-openssl-*/demos/
-openssl-*/engines/
-openssl-*/external/
-openssl-*/fuzz/
-openssl-*/ms/
-openssl-*/os-dep/
-openssl-*/util/
-openssl-*/VMS/
-openssl-*/doc/
-openssl-*/include/crypto/
-openssl-*/include/internal/
-openssl-*/Configurations/
 openssl-*/*.a
 openssl-*/*.pc
 openssl-*/*.so*
 openssl-*/config.log
+# OpenSSL generated headers
+openssl-*/include/openssl/opensslconf.h
+openssl-*/include/crypto/bn_conf.h
+openssl-*/include/crypto/dso_conf.h
+# OpenSSL build artifacts in specific dirs
+openssl-*/apps/*.o
+openssl-*/apps/*.d
+openssl-*/apps/openssl
+openssl-*/test/
+openssl-*/fuzz/
+openssl-*/engines/*.o
+openssl-*/engines/*.d
+openssl-*/crypto/**/*.o
+openssl-*/crypto/**/*.d
+openssl-*/crypto/**/*.s
+openssl-*/ssl/**/*.o
+openssl-*/ssl/**/*.d
+openssl-*/tools/c_rehash
+openssl-*/util/shlib_wrap.sh
+
+# Nginx build artifacts
+nginx-*/objs/
+nginx-*/Makefile
 
 # Core dumps and crash files
 core
@@ -76,14 +82,13 @@ desktop.ini
 *.temp
 /tmp/
 
-# Configuration files with sensitive data (keep templates)
-*.conf.local
-*.conf.prod
-ssl/private/
-ssl/*.key
-ssl/*.pem
-*.crt
+# Private keys and certificates (security)
 *.key
+*.pem
+*.crt
+*.csr
+*.p12
+*.pfx
 
 # Package managers
 node_modules/

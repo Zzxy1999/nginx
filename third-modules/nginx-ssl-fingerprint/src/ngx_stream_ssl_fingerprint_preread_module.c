@@ -9,7 +9,7 @@
 #include <ngx_stream.h>
 #include <ngx_md5.h>
 
-extern int ngx_ssl_ja3(ngx_connection_t *c);
+extern int ngx_ssl_ja_data(ngx_connection_t *c);
 extern int ngx_ssl_ja3_hash(ngx_connection_t *c);
 
 static ngx_int_t ngx_stream_ssl_fingerprint_preread_init(ngx_conf_t *cf);
@@ -39,35 +39,6 @@ ngx_module_t  ngx_stream_ssl_fingerprint_preread_module = {
 };
 
 static ngx_int_t
-ngx_stream_ssl_greased(ngx_stream_session_t *s,
-                 ngx_stream_variable_value_t *v, uintptr_t data)
-{
-    if (s->connection == NULL)
-    {
-        return NGX_OK;
-    }
-
-    if (s->connection->ssl == NULL)
-    {
-        return NGX_OK;
-    }
-
-    if (ngx_ssl_ja3(s->connection) == NGX_DECLINED)
-    {
-        return NGX_ERROR;
-    }
-
-    v->len = 1;
-    v->data = (u_char*)(s->connection->ssl->fp_tls_greased ? "1" : "0");
-
-    v->valid = 1;
-    v->no_cacheable = 1;
-    v->not_found = 0;
-
-    return NGX_OK;
-}
-
-static ngx_int_t
 ngx_stream_ssl_fingerprint(ngx_stream_session_t *s,
                  ngx_stream_variable_value_t *v, uintptr_t data)
 {
@@ -81,7 +52,7 @@ ngx_stream_ssl_fingerprint(ngx_stream_session_t *s,
         return NGX_OK;
     }
 
-    if (ngx_ssl_ja3(s->connection) == NGX_DECLINED)
+    if (ngx_ssl_ja_data(s->connection) == NGX_DECLINED)
     {
         return NGX_ERROR;
     }
@@ -124,12 +95,6 @@ ngx_stream_ssl_fingerprint_hash(ngx_stream_session_t *s,
 }
 
 static ngx_stream_variable_t  ngx_stream_ssl_ja3_variables_list[] = {
-
-    {   ngx_string("stream_ssl_greased"),
-        NULL,
-        ngx_stream_ssl_greased,
-        0, 0, 0
-    },
 
     {   ngx_string("stream_ssl_ja3"),
         NULL,
