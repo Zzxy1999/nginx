@@ -1808,7 +1808,6 @@ size_t SSL_client_hello_get0_ciphers(SSL *s, const unsigned char **out);
 size_t SSL_client_hello_get0_compression_methods(SSL *s,
                                                  const unsigned char **out);
 int SSL_client_hello_get1_extensions_present(SSL *s, int **out, size_t *outlen);
-size_t SSL_client_hello_get_ja3_data(SSL *s, unsigned char *data);
 int SSL_client_hello_get0_ext(SSL *s, unsigned int type,
                               const unsigned char **out, size_t *outlen);
 

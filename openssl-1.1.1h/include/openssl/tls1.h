@@ -131,15 +131,6 @@ extern "C" {
 /* ExtensionType value from RFC7627 */
 # define TLSEXT_TYPE_extended_master_secret      23
 
-/* ExtensionType value from RFC6961 */
-# define TLSEXT_TYPE_status_request_v2           17
-/* [draft-ietf-tls-certificate-compression] */
-# define TLSEXT_TYPE_compress_certificate        27
-/* ExtensionType value from RFC8449 */
-# define TLSEXT_TYPE_record_size_limit           28
-/* ExtensionType value from RFC7639 */
-# define TLSEXT_TYPE_application_settings        17513
-
 /* ExtensionType value from RFC4507 */
 # define TLSEXT_TYPE_session_ticket              35
 

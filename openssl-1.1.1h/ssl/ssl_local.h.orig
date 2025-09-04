@@ -715,6 +715,10 @@ typedef enum tlsext_index_en {
     TLSEXT_IDX_cryptopro_bug,
     TLSEXT_IDX_early_data,
     TLSEXT_IDX_certificate_authorities,
+    TLSEXT_IDX_status_request_v2,
+    TLSEXT_IDX_compress_certificate,
+    TLSEXT_IDX_record_size_limit,
+    TLSEXT_IDX_application_settings,
     TLSEXT_IDX_padding,
     TLSEXT_IDX_psk,
     /* Dummy index - must always be the last entry */
