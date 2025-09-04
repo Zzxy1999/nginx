@@ -165,13 +165,6 @@ struct ngx_http_v2_connection_s {
     unsigned                         blocked:1;
     unsigned                         goaway:1;
     unsigned                         push_disabled:1;
-
-    unsigned                         fp_fingerprinted:1;
-    ngx_str_t                        fp_settings;
-    ngx_uint_t                       fp_windowupdate;
-    ngx_str_t                        fp_priorities;
-    ngx_str_t                        fp_pseudoheaders;
-    ngx_str_t                        fp_str;
 };
 
 
